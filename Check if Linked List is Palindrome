@@ -1,0 +1,123 @@
+Given a singly linked list of size N of integers. The task is to check if the given linked list is palindrome or not.
+
+Example 1:
+
+Input:
+N = 3
+value[] = {1,2,1}
+Output: 1
+Explanation: The given linked list is
+1 2 1 , which is a palindrome and
+Hence, the output is 1.
+Example 2:
+
+Input:
+N = 4
+value[] = {1,2,3,4}
+Output: 0
+Explanation: The given linked list
+is 1 2 3 4 , which is not a palindrome
+and Hence, the output is 0.
+
+
+
+
+
+
+
+
+
+
+struct Node {
+  int data;
+  struct Node *next;
+  Node(int x) {
+    data = x;
+    next = NULL;
+  }
+};
+*/
+
+class Solution{
+  public:
+  Node* reverse(Node* head)
+  {
+      Node* prev=NULL;
+      Node* curr=head;
+      Node* nxt=NULL;
+      while(curr!=NULL)
+      {
+          nxt= curr->next;
+          curr->next=prev;
+          prev= curr;
+          curr=nxt;
+      }
+      return prev;
+  }
+    //Function to check whether the list is palindrome.
+    bool isPalindrome(Node *head)
+    {
+        //Your code here
+        // O(N) and Space(N)
+        // stack<int> s;
+        // Node* temp= head;
+        // while(temp!=NULL)
+        // {
+        //     s.push(temp->data);
+        //     temp= temp->next;
+        // }
+        // temp= head;
+        // while(temp!=NULL)
+        // {
+        //     if(s.top()== temp->data)
+        //     {
+        //         s.pop();
+        //     }
+        //     else 
+        //     {
+        //         return false;
+        //     }
+        //     temp=temp->next;
+        // }
+        // return true;
+        //O(N)  and Space(1);
+        
+        // Split the link list 
+        Node* slow= head;
+        Node* fast= head;
+        Node* first_list= head;
+        Node* second_list=NULL;
+        while(fast->next!=NULL&& fast->next->next!=NULL )
+        {
+            fast = fast->next->next;
+            slow = slow->next;
+        }
+        second_list = slow->next;
+        slow->next = NULL;
+        second_list= reverse(second_list);
+        // Print linklist
+        // while(temp!=NULL)
+        // {
+        //     cout<< temp->data<< " ";
+        //     temp= temp->next;
+        // }
+        // while(second_list!=NULL)
+        // {
+        //     cout<< second_list->data<< " ";
+        //     second_list= second_list->next;
+            
+        // }
+        
+        while(second_list!=NULL && first_list!=NULL)
+        {
+            if(second_list->data!=first_list->data)
+            {
+                return false;
+            }
+            second_list=second_list->next;
+            first_list=first_list->next;
+        }
+        return true;
+        
+    }
+};
