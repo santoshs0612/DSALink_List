@@ -1,0 +1,150 @@
+Given two decimal numbers represented by two linked lists of size N and M respectively. The task is to return a linked list that represents the sum of these two numbers.
+
+For example, the number 190 will be represented by the linked list, 1->9->0->null, similarly 25 by 2->5->null. Sum of these two numbers is 190 + 25 = 215, which will be represented by 2->1->5->null. You are required to return the head of the linked list 2->1->5->null.
+
+Example 1:
+
+Input:
+N = 2
+valueN[] = {4,5}
+M = 3
+valueM[] = {3,4,5}
+Output: 3 9 0  
+Explanation: For the given two linked
+list (4 5) and (3 4 5), after adding
+the two linked list resultant linked
+list will be (3 9 0).
+Example 2:
+
+Input:
+N = 2
+valueN[] = {6,3}
+M = 1
+valueM[] = {7}
+Output: 7 0
+Explanation: For the given two linked
+list (6 3) and (7), after adding the
+two linked list resultant linked list
+will be (7 0).
+
+
+
+
+
+
+struct Node {
+    int data;
+    struct Node* next;
+    Node(int x) {
+        data = x;
+        next = NULL;
+    }
+};
+
+*/
+
+class Solution
+{
+    public:
+    struct Node* reverse(struct Node* head)
+    {
+        struct Node* prev=NULL;
+        struct Node* curr=head;
+        struct Node* nxtp=NULL;
+        while(curr!=NULL)
+        {
+            nxtp=curr->next;
+            curr->next=prev;
+            prev=curr;
+            curr=nxtp;
+        }
+        return prev;
+    }
+    //Function to add two numbers represented by linked list.
+    struct Node* addTwoLists(struct Node* first, struct Node* second)
+    {
+        // code here
+        struct Node* list_1= reverse(first);
+        struct Node* list_2=reverse(second);
+        int carry=0,sum=0;
+        struct Node* ans=new Node(0);
+        struct Node* res=ans;
+        while(list_1!=NULL && list_2!=NULL)
+        {
+            sum  =list_1->data+list_2->data+carry;
+            if(sum>9)
+            {
+                sum=sum%10;
+                carry=1;
+                struct Node* dummy= new Node(sum);
+                ans->next=dummy;
+                ans=ans->next;
+                //delete(dummy);
+            }
+            else {
+                struct Node* dummy= new Node(sum);
+                carry=0;
+                ans->next=dummy;
+                ans=ans->next;
+                //delete(dummy);
+            }
+            list_1=list_1->next;
+            list_2=list_2->next;
+        }
+        
+        while(list_1!=NULL)
+        {
+            sum=list_1->data+carry;
+            if(sum>9)
+            {
+                sum=sum%10;
+                carry=1;
+                struct Node* dummy=new Node(sum);
+                ans->next=dummy;
+                ans=ans->next;
+                //delete(dummy);
+            }
+            else {
+                struct Node* dummy= new Node(sum);
+                carry=0;
+                ans->next=dummy;
+                ans=ans->next;
+                //delete(dummy);
+            }
+            list_1=list_1->next;
+        }
+        while(list_2!=NULL)
+        {
+            sum=list_2->data+carry;
+            if(sum>9)
+            {
+                sum=sum%10;
+                carry=1;
+                struct Node* dummy=new Node(sum);
+                ans->next=dummy;
+                ans=ans->next;
+                //delete(dummy);
+            }
+            else {
+                struct Node* dummy= new Node(sum);
+                carry=0;
+                ans->next=dummy;
+                ans=ans->next;
+                //delete(dummy);
+            }
+            list_2=list_2->next;
+        }
+        if(carry)
+        {
+            struct Node* dummy = new Node(carry);
+            carry=0;
+            ans->next=dummy;
+            //delete(dummy);
+        }
+        res=res->next;
+        res =reverse(res);
+        
+        return res;
+        
+    }
+};
