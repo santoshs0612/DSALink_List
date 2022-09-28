@@ -1,0 +1,101 @@
+Given two singly linked lists of size N and M, write a program to get the point where two linked lists intersect each other.
+
+ 
+
+Example 1:
+
+Input:
+LinkList1 = 3->6->9->common
+LinkList2 = 10->common
+common = 15->30->NULL
+Output: 15
+Explanation:
+Y ShapedLinked List
+Example 2:
+
+Input: 
+Linked List 1 = 4->1->common
+Linked List 2 = 5->6->1->common
+common = 8->4->5->NULL
+Output: 8
+Explanation: 
+
+4              5
+|              |
+1              6
+ \             /
+  8   -----  1 
+   |
+   4
+   |
+  5
+  |
+  NULL     
+
+
+
+
+
+/* Linked List Node
+struct Node {
+  int data;
+  struct Node *next;
+  Node(int x) {
+    data = x;
+    next = NULL;
+  }
+}; */
+
+//Function to find intersection point in Y shaped Linked Lists.
+int get_intersetion(int d,Node* head1 ,Node* head2)
+{
+    
+    for(int i=0;i<d;i++)
+    {
+        if(head1 == NULL)
+        {
+            return -1;
+        }
+        head1=head1->next;
+    }
+    while(head1!=NULL && head2!=NULL)
+    {
+        if(head1==head2)
+        {
+            return head1->data;
+        }
+        head1=head1->next;
+        head2=head2->next;
+    }
+    return -1;
+}
+int intersectPoint(Node* head1, Node* head2)
+{
+    // Your Code Here
+    Node* temp1= head1;
+    Node* temp2= head2;
+    
+    int a=0,b=0,c=0;
+    
+    while(temp1!=NULL)
+    {
+        a++;
+        temp1=temp1->next;
+    }
+    while(temp2!=NULL)
+    {
+        b++;
+        temp2=temp2->next;
+    }
+    
+    if(a>b)
+    {
+        c= a-b;
+        return get_intersetion(c,head1,head2);
+    }
+    else 
+    {
+        c=b-a;
+        return get_intersetion(c,head2,head1);
+    }
+}
