@@ -91,6 +91,8 @@ class Solution
         {
             return;
         }
+        // when slow is at head  
+        // This is the special case may fail for some test cases
         else if(slow==head)
         {
             while(fast->next!=slow)
