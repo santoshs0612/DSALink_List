@@ -1,0 +1,92 @@
+Given a Circular Linked List of size N. The task is to delete the given node (excluding the first and last node) in the circular linked list and then print the reverse of the circular linked list.
+
+ 
+
+Example 1:
+
+
+Input:
+5
+2 5 7 8 10
+8
+
+Output:
+10 7 5 2
+Explanation: 
+After deleting 8 from the given circular linked 
+list, it has elements as 2, 5, 7, 10. Now, 
+reversing this list will result in 10, 7, 5, 2.
+ 
+
+Example 2:
+
+Input:
+4
+1 7 8 10
+8
+
+Output:
+10 7 1
+
+Explanation:
+After deleting 8 from the given circular linked 
+list, it has elements as 1, 7,10. Now, reversing 
+this list will result in 10, 7, 1.
+
+
+
+
+
+
+/* structure for a node 
+struct Node
+{
+	int data;
+	struct Node *next;
+};
+*/
+
+/* Function to delete a given node from the list */
+void deleteNode(struct Node **head, int key)
+{
+
+// Your code goes here
+    struct Node* temp = (*head);
+    struct Node* prev=temp;
+    while(temp->next!=(*head))
+    {
+        if(temp->data==key)
+        {
+            break;
+        }
+        prev= temp;
+        temp=temp->next;
+    }
+    prev->next= temp->next;
+}
+
+/* Function to reverse the linked list */
+ void reverse(struct Node** head_ref)
+{
+
+// Your code goes here
+//Node* temp =(*head_ref);
+struct Node* curr= (*head_ref);
+struct Node* prev= NULL;
+struct Node* next_n= NULL;
+
+while(curr->next!=(*head_ref))
+{
+    next_n= curr->next;
+    curr->next= prev;
+    prev=curr;
+    curr=next_n;
+}
+next_n=curr->next;
+curr->next=prev;
+next_n->next=curr;
+(*head_ref)= curr;
+//(*head_ref)= prev;
+
+
+}
