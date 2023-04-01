@@ -1,0 +1,106 @@
+Given a sorted linked list of distinct nodes (no two nodes have the same data) and an integer X. Count distinct triplets in the list that sum up to given integer X.
+Note: The Linked List can be sorted in any order.
+
+Example 1:
+
+Input: LinkedList: 1->2->4->5->6->8->9, X = 17
+Output: 2
+Explanation: Distinct triplets are (2, 6, 9) 
+and (4, 5, 8) which have sum equal to X i.e 17.
+
+Example 2:
+
+Input: LinkedList: 1->2->4->5->6->8->9, X = 15
+Output: 5
+Explanation: (1, 5, 9), (1, 6, 8), (2, 4, 9), 
+(2, 5, 8), (4, 5, 6) are the distinct triplets
+
+
+
+
+//User function Template for C++
+
+// int count_pair(Node* head1, Node* head2, int val)
+// {
+//     int count=0;
+    
+//     while(head1!=NULL && head2!=NULL && head1!=head2 
+//             && head2->next!=head1)
+//             {
+//                 int sum  = head1->data+head2->data;
+//                 if(sum==val)
+//                 {
+//                     count++;
+//                     head1= head1->next;
+//                     head2= head2->next;
+//                 }
+//                 else if( sum>val)
+//                 {
+//                     head2=head2->prev;
+//                 }
+//                 else 
+//                 {
+//                     head1=head1->next;
+//                 }
+//             }
+//             return count;
+// }
+
+
+int countTriplets(struct Node* head, int x) 
+{ 
+    // code here.
+    
+    // O(N2) +O(N)
+    unordered_map<int,Node*> mp;
+    Node* temp =head;
+    int count =0;
+    while(temp!=NULL)
+    {
+        mp[temp->data]= temp;
+        temp=temp->next;
+    }
+    Node* ptr1=head;
+    Node* ptr2=NULL;
+    while(ptr1!=NULL)
+    {
+        ptr2=ptr1->next;
+        while(ptr2!=NULL)
+        {
+            int sum = ptr1->data+ptr2->data;
+            
+            if(mp.find(x-sum)!=mp.end() && mp[x-sum]!=ptr1&&
+                mp[x-sum]!=ptr2)
+                {
+                    count++;   
+                }
+                ptr2=ptr2->next;
+        }
+        ptr1=ptr1->next;
+    }
+    return (count/3);
+    
+    
+    // O(N2)+O(1)
+    
+    
+    //// Its valid only with doubly linklist 
+    // Node* head1= head;
+    // Node* head2=head;
+    // int count=0;
+    // while(head2->next!=NULL)
+    // {
+    //     head2=head2->next;
+    // }
+    
+    // while(head1!=NULL)
+    // {
+        
+    //     Node* first = head1->next;
+        
+    //     count+= count_pair(first,head2, x-head1->data);
+    //     head1= head1->next;
+    // }
+    // return count;
+    
+} 
