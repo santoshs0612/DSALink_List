@@ -1,0 +1,89 @@
+
+Given a doubly linked list containing n nodes, where each node is at most k away from its target position in the list. The problem is to sort the given doubly linked list. 
+For example, let us consider k is 2, a node at position 7 in the sorted doubly linked list, can be at positions 5, 6, 7, 8, 9 in the given doubly linked list.
+
+Examples:
+ 
+
+Sample Input 1 :
+1
+4 
+6 5 3 2 8 10 9 -1
+Sample Output 1 :
+2 3 5 6 8 9 10 -1
+
+
+
+#include <bits/stdc++.h> 
+/****************************************************************
+
+    Following is the class structure of the Node class:
+
+        class Node
+        {
+        public:
+            int data;
+            Node *next;
+            Node *prev;
+            Node(int data)
+            {
+                this->data = data;
+                this->next = NULL;
+                this->prev = NULL;
+            }
+        };
+
+*****************************************************************/
+struct comp{
+    bool operator()(Node* p1,Node* p2)
+    {
+        return (p1->data> p2->data);
+    }
+
+};
+Node *sortedDll(Node *head, int k)
+{
+    // Write your code here
+    if(head ==NULL)
+    {
+        return head;
+    }
+
+    priority_queue<Node*, vector<Node*>,comp> pq;
+    int i=0;
+    Node* temp=head;
+    while(i<k+1)
+    {
+        pq.push(temp);
+        temp=temp->next;
+        i++;
+    }
+    Node* new_node=NULL;
+    Node* next_node=NULL;
+
+    while(!pq.empty())
+    {
+        if(new_node==NULL)
+        {
+            new_node= pq.top();
+            new_node->prev=NULL;
+            next_node= new_node;
+        }
+        else 
+        {
+            next_node->next= pq.top();
+            Node* temp1= pq.top();
+            temp1->prev=next_node;
+            next_node= temp1;
+        }
+        pq.pop();
+        if(temp!=NULL)
+        {
+            pq.push(temp);
+            temp=temp->next;
+        }
+    }
+    next_node->next= NULL;
+    return new_node; 
+
+}
