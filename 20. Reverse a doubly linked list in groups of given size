@@ -1,0 +1,84 @@
+Given a doubly linked list containing n nodes. The problem is to reverse every group of k nodes in the list.
+
+Sample Input 1:
+1 
+1 2 3 4 5 6 7 -1
+2  
+Sample Output 1:
+2 1 4 3 6 5 7 -1
+
+
+
+
+
+
+
+
+
+
+
+
+#include <bits/stdc++.h> 
+/*********************************************************
+
+    Following is the class structure of the Node class:
+
+    class Node
+	{
+	public:
+	    int data;
+	    Node *next;
+	    Node *prev;
+	    Node(int data)
+	    {
+	        this->data = data;
+	        this->next = NULL;
+	        this->prev = NULL;
+	    }
+	};
+
+************************************************************/
+
+// Node*  reverse(Node* head)
+// {
+// 	Node* prev_n= NULL;
+// 	Node* next_n= NULL;
+// 	Node* curr= head;
+
+// 	while(curr!=NULL)
+// 	{
+// 		next_n= curr->next;
+// 		curr->next= prev_n;
+// 		curr->prev=next_n;
+// 		prev_n= curr;
+// 		curr= next_n;
+// 	}
+// 	return prev_n;
+
+// }
+
+Node* reverseDLLInGroups(Node* head, int k)
+{	
+    // Write your code here. 
+	Node* prev_n= NULL;
+	Node* next_n= NULL;
+	Node* curr= head;
+	int i=0;
+	while(i<k && curr!=NULL)
+	{
+		next_n= curr->next;
+		curr->next= prev_n;
+		curr->prev=next_n;
+		prev_n= curr;
+		curr= next_n;
+		i++;
+	}
+	if(curr!=NULL)
+	{
+		head->next= reverseDLLInGroups(curr,k);
+	}
+	
+	return prev_n;
+
+}
+
