@@ -77,8 +77,31 @@ class Solution
         
         head= reverse(head);
         return head; 
+                
+        //// New Method 
         
         
+        // Node* curr= head;
+        // Node* temp=curr;
+        
+        // while(curr->next!=NULL)
+        // {
+            
+        //     if(curr->data<curr->next->data)
+        //     {
+        //         temp= curr;
+        //         temp->data= temp->next->data;
+        //         temp->next= temp->next->next;
+        //         curr= head;
+        //     }
+        //     else 
+        //     {
+        //         curr=curr->next;
+        //     }
+        // }
+        
+        // return head;
+
 
     }
     
